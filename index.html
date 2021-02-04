@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notification API</title>
+</head>
+
+<body>
+
+  <button onclick=notifyMe()>CLICK ME TI SEE A NOTIFICATION</button>
+
+  <script>
+
+    function notify() {
+      const notification = new Notification('NEW UPDATE', {
+        icon: '',
+        body: 'Navbar added',
+      })
+    }
+
+    function notifyMe() {
+      if (!('Notification' in window)) {
+        alert('This navegator does not suport notifications')
+      }
+
+      else if (Notification.permission === 'granted') {
+        notify()
+      }
+
+      else if (Notification.permission !== 'denied') {
+        Notification.requestPermission((permission) => {
+          if (permission === 'granted') {
+            notify()
+          }
+        })
+
+        notification.onclick = () => {
+          window.open('https:github.com/who-is-beto')
+        }
+        setTimeout(notification.close.bind(notification), 100)
+      }
+    }
+  </script>
+</body>
+
+</html>
